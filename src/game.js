@@ -27,7 +27,7 @@ class Game {
 
     printPlayers() {
         this.players.forEach((p, index) => {
-            console.log(`\tPlayer ${index + 1} - Name: ${p.name} - Position: ${p.position} - Rounds: ${p.rounds}`);
+            console.log(`\tPlayer ${index + 1} - Name: ${p.name} - Position: ${p.position} - Rounds: ${p.rounds} - Balance: ${p.balance}`);
         });
     }
 }

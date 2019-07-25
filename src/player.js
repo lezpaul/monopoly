@@ -2,15 +2,20 @@ class Player {
 
     static get P_HORSE() { return 'Horse' };
     static get P_CAR() { return 'Car' };
-    
+
     constructor(name, beginning_location = 0) {
         this.name = name;
         this.position = beginning_location;
         this.rounds = 0;
+        this.balance = 0;
     }
 
     advance(positions) {
-        this.position = (this.position + positions) % 40;
+        let new_position = (this.position + positions) % 40;
+        if (this.position + positions >= 40) {
+            this.balance += 200 * ((this.position + positions - new_position) / 40);
+        }
+        this.position = new_position;
     }
 
     play_turn() {
