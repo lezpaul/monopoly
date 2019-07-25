@@ -1,0 +1,26 @@
+{
+  "name": "monopoly",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "mocha ./tests/**/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lezpaul/monopoly.git"
+  },
+  "author": "Paolo Alghisi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lezpaul/monopoly/issues"
+  },
+  "homepage": "https://github.com/lezpaul/monopoly#readme",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.2.0"
+  }
+}
