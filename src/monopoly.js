@@ -1,12 +1,13 @@
+const Consts = require('./constants');
 const Player = require('./player').Player;
 const Game = require('./game').Game;
 
 
 try {
     players = [
-        new Player('Horse'),
-        new Player('Car'),
-        new Player('Tower')
+        new Player(Consts.Players.P_HORSE),
+        new Player(Consts.Players.P_CAR),
+        new Player(Consts.Players.P_TOWER)
     ];
 
     console.clear();

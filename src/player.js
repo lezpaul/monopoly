@@ -1,8 +1,8 @@
+const Consts = require('./constants');
+
+
 class Player {
-
-    static get P_HORSE() { return 'Horse' };
-    static get P_CAR() { return 'Car' };
-
+    
     constructor(name, beginning_location = 0) {
         this.name = name;
         this.position = beginning_location;
@@ -10,12 +10,24 @@ class Player {
         this.balance = 0;
     }
 
-    advance(positions) {
-        let new_position = (this.position + positions) % 40;
-        if (this.position + positions >= 40) {
-            this.balance += 200 * ((this.position + positions - new_position) / 40);
+    advance(step) {
+        // determine new position
+        let new_position = (this.position + step) % Consts.Board.TOTAL_POSITIONS;
+        
+        // while moving, every time a player "lands on go" or "pass over go" he receive $200
+        if (this.position + step >= Consts.Board.TOTAL_POSITIONS) {
+            let times_landed_on_go = (this.position + step - new_position) / Consts.Board.TOTAL_POSITIONS;
+            this.balance += Consts.Board.LAND_ON_GO_REWARD * times_landed_on_go;
         }
-        this.position = new_position;
+
+        // new position can lead to another action
+        switch (new_position){
+            case Consts.Board.POS_GO_TO_JAIL:
+                this.position = Consts.Board.POS_JUST_VISITING;
+                break;
+            default:
+                this.position = new_position;
+        }
     }
 
     play_turn() {
@@ -25,5 +37,6 @@ class Player {
         this.rounds += 1;
     }
 }
+
 
 module.exports = { Player };

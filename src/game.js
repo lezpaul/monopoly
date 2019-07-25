@@ -1,13 +1,12 @@
+const Consts = require('./constants');
 const Utilities = require('./utilities');
 
 
 class Game {
 
-    static get CONSTRUCTOR_ERR_MSG_01() { return 'Players must be between 2 and 8' };
-
     constructor(players) {
         if (players.length < 2 || players.length > 8) {
-            throw new Error(Game.CONSTRUCTOR_ERR_MSG_01);
+            throw new Error(Consts.Messages.CONSTRUCTOR_ERR_MSG_01);
         }
         Utilities.shuffle(players);
         this.players = players;
@@ -31,5 +30,6 @@ class Game {
         });
     }
 }
+
 
 module.exports = { Game };
