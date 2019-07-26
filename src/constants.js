@@ -11,12 +11,19 @@ class Players {
 
 
 class Board {
+    static get INCOME_TAX_ABS() { return 200 };
+    static get INCOME_TAX_PERC() { return 0.1 };
     static get LAND_ON_GO_REWARD() { return 200 };
-    static get POS_GO() { return 0 };
-    static get POS_GO_TO_JAIL() { return 30 };
-    static get POS_INCOME_TAX() { return 4 };
-    static get POS_JUST_VISITING() { return 10 };
-    static get POS_LUXURY_TAX() { return 38 };
+    static get LUXURY_TAX() { return 75 };
+    static get POSITIONS() {
+        return {
+            GO: 0,
+            GO_TO_JAIL: 30,
+            INCOME_TAX: 4,
+            JUST_VISITING: 10,
+            LUXURY_TAX: 38
+        }
+    };
     static get TOTAL_POSITIONS() { return 40 };
 }
 

@@ -60,35 +60,80 @@ describe('Player Class Tests - Rel.2 - As a player, I receive $200 when I pass o
 describe('Player Class Tests - Rel.2 - As a Player, when I land on Go To Jail during a turn I move directly to Just Visiting.', () => {
 
 	it('Player starts before Go To Jail, lands on Go To Jail, ends up on Just Visiting and their balance is unchanged.', () => {
-		let p1 = new Player(Consts.Players.Player_CAR, Consts.Board.POS_GO_TO_JAIL - 5);
+		let p1 = new Player(Consts.Players.Player_CAR, Consts.Board.POSITIONS.GO_TO_JAIL - 5);
 		p1.advance(5);
-		expect(p1).to.have.property('position', Consts.Board.POS_JUST_VISITING);
+		expect(p1).to.have.property('position', Consts.Board.POSITIONS.JUST_VISITING);
 		expect(p1).to.have.property('balance', 0);
 	});
 
 	it('Player starts before Go To Jail, rolls enough to pass over Go To Jail but not enough to land on or pass over go. Their balance is unchanged and they end up where the should based on what they rolled.', () => {
-		let p1 = new Player(Consts.Players.Player_CAR, Consts.Board.POS_GO_TO_JAIL - 5);
+		let p1 = new Player(Consts.Players.Player_CAR, Consts.Board.POSITIONS.GO_TO_JAIL - 5);
 		p1.advance(9);
-		expect(p1).to.have.property('position', Consts.Board.POS_GO_TO_JAIL - 5 + 9);
+		expect(p1).to.have.property('position', Consts.Board.POSITIONS.GO_TO_JAIL - 5 + 9);
 		expect(p1).to.have.property('balance', 0);
 	});
 });
 
 
 describe('Player Class Tests - Rel.2 - As a Player, landing on Income Tax forces me to pay the smaller of 10% of my total worth or $200.', () => {
-	/* TODO
-	During a turn, a Player with an initial total worth of $1800 lands on Income Tax. The balance decreases by $180.
-	During a turn, a Player with an initial total worth of $2200 lands on Income Tax. The balance decreases by $200.
-	During a turn, a Player with an initial total worth of $0 lands on Income Tax. The balance decreases by $0.
-	During a turn, a Player with an initial total worth of $2000 lands on Income Tax. The balance decreases by $200.
-	During a turn, a Player passes over Income Tax. Nothing happens.
-	*/
+
+	it('During a turn, a Player with an initial total worth of $1800 lands on Income Tax. The balance decreases by $180.', () => {
+		let p1 = new Player(Consts.Players.Player_CAR, Consts.Board.POSITIONS.INCOME_TAX - 2);
+		let init_balance = 1800;
+		p1.balance = init_balance;
+		p1.advance(2);
+		expect(p1).to.have.property('balance', init_balance * (1 - Consts.Board.INCOME_TAX_PERC));
+	});
+
+	it('During a turn, a Player with an initial total worth of $2200 lands on Income Tax. The balance decreases by $200.', () => {
+		let p1 = new Player(Consts.Players.Player_CAR, Consts.Board.POSITIONS.INCOME_TAX - 2);
+		let init_balance = 2200;
+		p1.balance = init_balance;
+		p1.advance(2);
+		expect(p1).to.have.property('balance', init_balance - Consts.Board.INCOME_TAX_ABS);
+	});
+
+	it('During a turn, a Player with an initial total worth of $0 lands on Income Tax. The balance decreases by $0.', () => {
+		let p1 = new Player(Consts.Players.Player_CAR, Consts.Board.POSITIONS.INCOME_TAX - 2);
+		let init_balance = 0;
+		p1.balance = init_balance;
+		p1.advance(2);
+		expect(p1).to.have.property('balance', init_balance);
+	});
+
+	it('During a turn, a Player with an initial total worth of $2000 lands on Income Tax. The balance decreases by $200.', () => {
+		let p1 = new Player(Consts.Players.Player_CAR, Consts.Board.POSITIONS.INCOME_TAX - 2);
+		let init_balance = 2000;
+		p1.balance = init_balance;
+		p1.advance(2);
+		expect(p1).to.have.property('balance', init_balance - Consts.Board.INCOME_TAX_ABS);
+	});
+
+	it('During a turn, a Player passes over Income Tax. Nothing happens.', () => {
+		let p1 = new Player(Consts.Players.Player_CAR, Consts.Board.POSITIONS.INCOME_TAX - 2);
+		let init_balance = 1000;
+		p1.balance = init_balance;
+		p1.advance(3);
+		expect(p1).to.have.property('balance', init_balance);
+	});
 });
 
 
 describe('Player Class Tests - Rel.2 - As a Player, when I land on Luxury Tax, I pay $75.', () => {
-	/* TODO
-	Player takes a turn and lands on Luxury tax. Their balance decreases by $75.
-	Player passes Luxury Tax during a turn. Their balance is unchanged.
-	*/
+
+	it('Player takes a turn and lands on Luxury tax. Their balance decreases by $75.', () => {
+		let p1 = new Player(Consts.Players.Player_CAR, Consts.Board.POSITIONS.LUXURY_TAX - 5);
+		let init_balance = 1000;
+		p1.balance = init_balance;
+		p1.advance(5);
+		expect(p1).to.have.property('balance', init_balance - Consts.Board.LUXURY_TAX);
+	});
+
+	it('Player passes Luxury Tax during a turn. Their balance is unchanged.', () => {
+		let p1 = new Player(Consts.Players.Player_CAR, Consts.Board.POSITIONS.LUXURY_TAX - 5);
+		let init_balance = 1000;
+		p1.balance = init_balance;
+		p1.advance(6);
+		expect(p1).to.have.property('balance', init_balance);
+	});
 });
